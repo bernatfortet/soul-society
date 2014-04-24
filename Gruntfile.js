@@ -3,6 +3,7 @@ var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
 
+
 module.exports = function (grunt) {
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
@@ -49,6 +50,12 @@ module.exports = function (grunt) {
                     }
                 }
             }
+        },
+        'gh-pages':{
+            options: {
+                base: 'dist'
+            },
+            src: ['**']
         },
         open: {
             server: {
@@ -152,7 +159,7 @@ module.exports = function (grunt) {
                     src: [
                         '*.{ico,txt}',
                         'scripts/**/*.js',
-                        'styles/fonts*.{eot,svg,ttf,woff}',
+                        'styles/fonts/{,*/}*.{eot,svg,ttf,woff}',
                         '.htaccess',
                         'images/{,*/}*.{webp,gif,jpg,png}'
                     ]
@@ -182,6 +189,7 @@ module.exports = function (grunt) {
         'less:dist',
         'jade:dist',
         'copy',
+        'gh-pages'
     ]);
 
     grunt.registerTask('default', [ 'server']);
